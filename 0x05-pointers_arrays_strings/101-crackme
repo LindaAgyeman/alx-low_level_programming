@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+/**
+ * main - Generates a password for 101-crackme with the desired output
+ *
+ * Return: Always 0
+ */
+int main(void)
+{
+    char password[100];
+    int sum = 0;
+    int random_char;
+
+    /* Seed the random number generator with the current time */
+    srand(time(NULL));
+
+    /* Initialize the password array with null bytes */
+    for (int i = 0; i < 100; i++)
+    {
+        password[i] = '\0';
+    }
+
+    /* Generate random characters for the password */
+    while (sum < 2772 - 57)
+    {
+        random_char = rand() % 94 + 33;  // ASCII characters between '!' (33) and '~' (126)
+        password[sum % 100] = random_char;
+        sum += random_char;
+    }
+
+    /* Adjust the last character to reach the required sum */
+    password[(sum - 2772 + 57) % 100] = 2772 - sum;
+
+    /* Print the password and the desired output */
+    printf("%s", password);
+    printf("Tada! Congrats\n");
+
+    return (0);
+}
